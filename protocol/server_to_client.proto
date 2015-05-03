@@ -1,0 +1,52 @@
+message Datagram {
+	enum Type {
+		INPUT = 1;
+		CHAT = 2;
+		NICKNAME = 3;
+	}
+	required Type type = 1;
+
+	message Ack {
+		required sint32 ack = 1;
+		required int32 ackfield = 2;
+	}
+	optional Ack ack = 2;
+
+	optional sint32 reliable = 3;// if we want to get back an ack
+	// due to a protobuf3 weakness, it seems it equals 0 when not set
+
+	extensions 4 to max;
+}
+
+message Position {
+	extend Datagram {
+		optional Position position = 4;
+	}
+
+	message Character {
+		required string nickname = 1;
+		required uint32 x = 2;
+		required uint32 y = 3;
+	}
+	repeated Character character = 1;
+}
+
+message Chat {
+	extend Datagram {
+		optional Chat chat = 5;
+	}
+
+	message Character {
+		required string nickname = 1;
+		required string msg = 2;
+	}
+	repeated Character character = 1;
+}
+
+message GameOver {
+	extend Datagram {
+		optional GameOver game_over = 6;
+	}
+
+	required bool winner = 1;
+}

@@ -1,0 +1,42 @@
+message Datagram {
+	enum Type {
+		INPUT = 1;
+		CHAT = 2;
+		NICKNAME = 3;
+	}
+	required Type type = 1;
+
+	required Ack ack = 2;
+
+	optional sint32 reliable = 3;// if we want to get back an ack
+
+	extensions 4 to max;
+}
+message Ack {
+	required sint32 ack = 2;
+	required bytes ackfield = 3;
+}
+
+message Input {
+	extend Datagram {
+		optional Input input = 5;
+	}
+
+	required uint32 x = 1;
+}
+
+message Chat {
+	extend Datagram {
+		optional Chat chat = 6;
+	}
+
+	required string msg = 1;
+}
+
+message Handshake {
+	extend Datagram {
+		optional Handshake handshake = 7;
+	}
+
+	required string nickname = 1;
+}
