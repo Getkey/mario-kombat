@@ -13,6 +13,7 @@ class remote_seq(object):
 		self.last_ack = 50
 
 	def update_bitfield(self, id):
+		# Wat do if ack wraps?
 		ack_pos = id - self.last_ack
 		print(ack_pos, id)
 
@@ -40,3 +41,16 @@ class remote_seq(object):
 
 	def compose_ack():
 		return (self.last_ack, self.ack_field)
+
+class local_seq(object):
+	def __init__(self):
+		self.id = 1#Uses 1 instead of 0 as first number because of a weakness in protobuf3
+
+	def get_id(self):
+		to_return = self.id
+
+		self.id += 1
+		if self.id > 2**31 - 1# Max value for an int32
+			self.id = -2**31 +1# Min value for an int32
+
+		return to_return

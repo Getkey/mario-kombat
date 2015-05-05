@@ -1,8 +1,9 @@
 message Datagram {
 	enum Type {
-		INPUT = 1;
-		CHAT = 2;
-		NICKNAME = 3;
+		POSITION = 1;
+		HEALTH = 2
+		CHAT = 3;
+		NICKNAME = 4;
 	}
 	required Type type = 1;
 
@@ -31,9 +32,14 @@ message Position {
 	repeated Character character = 1;
 }
 
+message Health {
+	extend Datagram {
+		optional Health health = 5;
+}
+
 message Chat {
 	extend Datagram {
-		optional Chat chat = 5;
+		optional Chat chat = 6;
 	}
 
 	message Character {
@@ -45,7 +51,7 @@ message Chat {
 
 message GameOver {
 	extend Datagram {
-		optional GameOver game_over = 6;
+		optional GameOver game_over = 7;
 	}
 
 	required bool winner = 1;

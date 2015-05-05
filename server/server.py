@@ -31,7 +31,6 @@ class GameServerProtocol(asyncio.DatagramProtocol):# UDP
 			client = already_here()
 			client.handle.cancel()
 			client.handle = loop.call_later(10, self.clients.remove, client)
-			print("Works")
 		except LookupError:
 			client = player.Player(cl_ip, cl_port, "Jacouille")
 			self.clients.append(client)

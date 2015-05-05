@@ -6,6 +6,9 @@ class Character(object):
 		self.y = y
 		self._x_spawn = x
 		self._y_spawn = y
+		
+		self.heatlh = 150
+		#self.nickname# when do we get it?
 
 	def reset_position(self):
 		# This should be some sort of algo that respawns

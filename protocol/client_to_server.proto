@@ -22,7 +22,7 @@ message Input {
 		optional Input input = 5;
 	}
 
-	required uint32 x = 1;
+	required uint32 key = 1;
 }
 
 message Chat {
