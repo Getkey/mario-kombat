@@ -8,12 +8,12 @@ message Datagram {
 
 	required Ack ack = 2;
 
-	optional sint32 reliable = 3;// if we want to get back an ack
+	optional uint32 reliable = 3;// if we want to get back an ack
 
 	extensions 4 to max;
 }
 message Ack {
-	required sint32 ack = 2;
+	required uint32 ack = 2;
 	required bytes ackfield = 3;
 }
 

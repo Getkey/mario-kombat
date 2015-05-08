@@ -32,7 +32,7 @@ def route_data(b_string, remote_seq):
 
 
 # Test
-#from protocol import remote_sequence
-#remote_seq = remote_sequence.remote_seq
+#from protocol import reliability
+#remote_seq = reliability.remote_seq
 
 #route_data(b"\x08\x02\x12\x04\x08\x1e\x10d*?\n\x15\n\x0bJean-Pierre\x12\x06Salut.\n&\n\x06P\xc3\xa9p\xc3\xa9\x12\x1cMregn\xc3\xa9 d'mon temps...mrbmmr", remote_seq)

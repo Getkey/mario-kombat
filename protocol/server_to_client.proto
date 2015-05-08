@@ -1,19 +1,19 @@
 message Datagram {
 	enum Type {
 		POSITION = 1;
-		HEALTH = 2
+		HEALTH = 2;
 		CHAT = 3;
 		NICKNAME = 4;
 	}
 	required Type type = 1;
 
 	message Ack {
-		required sint32 ack = 1;
+		required uint32 ack = 1;
 		required int32 ackfield = 2;
 	}
 	optional Ack ack = 2;
 
-	optional sint32 reliable = 3;// if we want to get back an ack
+	optional uint32 reliable = 3;// if we want to get back an ack
 	// due to a protobuf3 weakness, it seems it equals 0 when not set
 
 	extensions 4 to max;
@@ -35,6 +35,9 @@ message Position {
 message Health {
 	extend Datagram {
 		optional Health health = 5;
+	}
+
+	required string hp = 1;
 }
 
 message Chat {
