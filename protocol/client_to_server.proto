@@ -3,6 +3,7 @@ message Datagram {
 		INPUT = 1;
 		CHAT = 2;
 		NICKNAME = 3;
+		HANDSHAKE = 4;
 	}
 	required Type type = 1;
 

@@ -1,10 +1,12 @@
 from protocol import client_to_server as c2s
+from engine import engine
+from server import player
 
 
 def use_chat(msg):#this should be in the game engine
 	print("The chat message contains: ", msg)
 
-def route_data(b_string, remote_seq):
+def route_data(b_string, remote_seq, player):
 	message = c2s.Datagram()
 	try:
 		message.parse_from_bytes(b_string)
@@ -14,18 +16,20 @@ def route_data(b_string, remote_seq):
 			# a packet is sent the client is notified
 			remote_seq.update_bitfield(message.reliable)
 			print(remote_seq.compose_ack())
-
-		if message.type is message.Type.INPUT:
-			print("This is an input")
-			#use_input(message.input.x)
-		elif message.type is message.Type.CHAT:
-			print("This is a chat message")
-			use_chat(message.chat.msg)
+		if player.ready:
+			if message.type is message.Type.INPUT:
+				print("This is an input")
+				engine.use_input(player, message.input.key)
+			elif message.type is message.Type.CHAT:
+				engine.use_chat(player, message.chat.msg)
+				print("This is a chat message")
+			else:
+				print("None of the above. WTF")
 		elif message.type is message.Type.HANDSHAKE:
-			print("This is an handshake")
-			#use_handshake(message.handshake.nickname)
+			print("This is a handshake")
+			player.set_nickname(message.handshake.nickname)
 		else:
-			print("None of the above. WTF")
+			print("Don't you know it's impolite to talk to people before greeting them?\nHint: shake my hand.")
 
 	except ValueError:
 		print("What is this garbage? Disregard it.")

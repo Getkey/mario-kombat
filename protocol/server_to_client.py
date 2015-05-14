@@ -1,6 +1,6 @@
-from enum import Enum
+from protobuf3.fields import BoolField, Int32Field, EnumField, MessageField, UInt32Field, StringField
 from protobuf3.message import Message
-from protobuf3.fields import BoolField, EnumField, MessageField, UInt32Field, StringField, Int32Field
+from enum import Enum
 
 
 class Datagram(Message):

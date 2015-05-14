@@ -1,6 +1,6 @@
-from protobuf3.message import Message
-from protobuf3.fields import MessageField, BytesField, UInt32Field, EnumField, StringField
+from protobuf3.fields import BytesField, EnumField, MessageField, UInt32Field, StringField
 from enum import Enum
+from protobuf3.message import Message
 
 
 class Datagram(Message):
@@ -9,6 +9,7 @@ class Datagram(Message):
         INPUT = 1
         CHAT = 2
         NICKNAME = 3
+        HANDSHAKE = 4
 
 
 class Ack(Message):

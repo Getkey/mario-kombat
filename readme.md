@@ -1,4 +1,4 @@
-# Reloaded
+# Mario Kombat : Le retour de Luigi
 
 ## Dependancies
 * [protobuf3](http://pythonhosted.org/protobuf3/)
