@@ -8,7 +8,8 @@ class Player(object):
 
 		self.ip = ip
 		self.port = port
-		self.remote_seq = reliability.remote_seq()
+		self.remote_seq = reliability.Remote_seq()
+		self.local_seq = reliability.Local_seq()
 
 		self.character = character.Character(30, 348)
 

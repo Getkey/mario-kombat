@@ -1,17 +1,10 @@
-# no no no
-# Every packet includes a bitfield and a sequence number
-# This Class is used to generate 'em
-# Thus it is on the receiver's side
-# TODO: make this a generator
 import bitstring
 
 UINT32MAX = 2**32 - 1
 
-class remote_seq(object):
+class Remote_seq(object):
 	def __init__(self):
 		self.ack_field = bitstring.BitArray(length=32)
-		self.ack_field.set(True, 31)#debug
-		self.ack_field.set(True, 25)#debug
 		self.last_ack =  UINT32MAX - 2
 
 	def update_bitfield(self, id):
@@ -45,10 +38,10 @@ class remote_seq(object):
 			# Deleting then adding is more efficient
 		print('But then I was like', self.ack_field.bin)
 
-	def compose_ack():
-		return (self.last_ack, self.ack_field)
+	def compose_ack(self):
+		return (self.last_ack, self.ack_field.int)
 
-class local_seq(object):
+class Local_seq(object):
 	def __init__(self):
 		self.id = 1#Uses 1 instead of 0 as first number because of a weakness in protobuf3
 
@@ -56,7 +49,7 @@ class local_seq(object):
 		to_return = self.id
 
 		self.id += 1
-		if self.id > UINT32MAX:# Max value for an int32
-			self.id = 0
+		if self.id > UINT32MAX:# Wrap
+			self.id = 1
 
 		return to_return

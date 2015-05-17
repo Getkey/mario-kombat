@@ -3,40 +3,19 @@ import socket
 from client import deserialize
 
 class Clib(object):
-	def __init__(self, proto_file, srv_ip, srv_port):
-		self.meta = {}
-		#create an object in meta for every possible message
-		self.meta.chat = []
-		# Or use them directly in the game engine?
-
-		self.usr_prot = __import__(proto_file)
+	def __init__(self, srv_ip, srv_port):
 		self.srv_data = (srv_ip, srv_port)
 
 		self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 		self.sock.setblocking(False)
+		self.sock.connect(self.srv_data)
 
-	def pool(self):
-		#pools
-		self.sock.bind(self.srv_data)
-		
+	def pool(self, characters, me):
 		try:
 			byte_msg = self.sock.recv(1024)
-			#self.meta = refresh(byte_msg, self.meta)
-			#deserialize
-			#self.meta = #what's has been deserialized
+			deserialize.refresh(byte_msg, characters, me)
 		except BlockingIOError:
 			return
 
-	def getMessage(self, msg_name):
-		return self.meta[msg_name]
-
 	def sendMessage(self, message):
-		self.sock.sendto(message, self.srv_data)
-
-	def getChat(self):
-		chat = self.meta.chat
-
-a = Clib('sys', '127.0.0.1', 9876)
-
-b = a.pool()
-print(b)
+		self.sock.send(message)

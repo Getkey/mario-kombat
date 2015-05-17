@@ -7,6 +7,7 @@
 
 ## Get started
 ### Generate the protocol
+This step is unneeded as I already did it for you. Am I not the nicest?
 ```bash
 $ protoc --python3_out=protocol/ protocol/server_to_client.proto
 $ protoc --python3_out=protocol/ protocol/client_to_server.proto

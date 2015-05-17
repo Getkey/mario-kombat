@@ -3,6 +3,7 @@ import asyncio
 from server import player
 from server import deserialize
 from server import serialize
+from protocol import reliability
 
 class GameServerProtocol(asyncio.DatagramProtocol):# UDP
 	
@@ -42,13 +43,14 @@ class GameServerProtocol(asyncio.DatagramProtocol):# UDP
 
 def broadcast(delay):# Periodically tells players what the game state is
 	start_time = loop.time()
-	print("broadcast", transport, protocol.clients)
+	print("broadcast", protocol.clients)
 
-	encoded_to_be_sent = serialize.mk_position_message(protocol.clients)
-	print(encoded_to_be_sent)
+	instance = serialize.mk_position_message(protocol.clients)# The generic message
 
 	for cl in protocol.clients:
-		transport.sendto(encoded_to_be_sent, (cl.ip, cl.port))
+		to_be_sent = serialize.add_ack(cl, instance, False)# is then personnalized for everybody
+		print(to_be_sent)
+		transport.sendto(to_be_sent, (cl.ip, cl.port))
 
 	loop.call_at(start_time + delay, broadcast, delay)# Note: if scheduled to time in the past; runs NOW!
 
